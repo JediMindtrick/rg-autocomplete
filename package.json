@@ -1,0 +1,42 @@
+{
+  "name": "riotgear-autocomplete",
+  "version": "1.0.0",
+  "description": "autocomplete slider component",
+  "main": "dist/rg-autocomplete.min.js",
+  "scripts": {
+    "lint": "jshint . --exclude-path=.gitignore",
+    "riot": "riot src dist/rg-autocomplete.js",
+    "postriot": "riot demo",
+    "uglify": "uglifyjs --output dist/rg-autocomplete.min.js -- dist/rg-autocomplete.js",
+    "build": "npm run riot && npm run uglify",
+    "test": "istanbul cover -- _mocha --timeout=10000"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RiotGear/rg-autocomplete.git"
+  },
+  "keywords": [
+    "riotjs",
+    "riot",
+    "component",
+    "autocomplete"
+  ],
+  "author": "Gregory Pratt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RiotGear/rg-autocomplete/issues"
+  },
+  "homepage": "https://github.com/RiotGear/rg-autocomplete",
+  "devDependencies": {
+    "babel": "~5.4.3",
+    "chai": "~2.2.0",
+    "istanbul": "~0.3.13",
+    "jshint": "~2.7.0",
+    "mocha": "~2.2.4",
+    "riot": "~2.0.15",
+    "uglify-js": "~2.4.21"
+  }
+}
