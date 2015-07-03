@@ -2,6 +2,7 @@
 
 	<div class="container { open: opened }" style="width: { width }">
 		<input type="{ opts.type || 'text' }" name="textbox"
+					 placeholder="{ opts.placeholder }"
 					 onkeydown="{ handleKeys }"
 					 oninput="{ filterItems }"
 					 onfocus="{ handleOnFocus }">

@@ -7,5 +7,5 @@ In development...
 Add this to your Riot app markup
 
 ```html
-<rg-autocomplete></rg-autocomplete>
+<rg-autocomplete items="{ countries }" type="text" value="Enter a country"></rg-autocomplete>
 ```
