@@ -6,7 +6,14 @@
 Add this to your Riot app markup
 
 ```html
-<rg-autocomplete items="{ countries }" type="text" value="United Kingdom" placeholder="Enter a country name"></rg-autocomplete>
+<rg-autocomplete items="{ countries }"
+                 type="text"
+                 value="United Kingdom"
+                 placeholder="Enter a country name"
+                 onselect="{ ... }"
+                 onclose="{ ... }"
+                 onfilter="{ ... }">
+</rg-autocomplete>
 ```
 
 And this to your JavaScript
