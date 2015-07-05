@@ -143,7 +143,6 @@
 		}
 
 		.container.open input {
-			border-bottom: 0;
 		}
 
 		.dropdown {
@@ -176,6 +175,10 @@
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+		}
+
+		li:first-child {
+			border-top: 0;
 		}
 
 		li:hover {
