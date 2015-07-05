@@ -1,5 +1,3 @@
-In development...
-
 <img src="https://raw.githubusercontent.com/RiotGear/rg-autocomplete/master/demo/img/example.png" width="250px" />
 <img src="https://raw.githubusercontent.com/RiotGear/rg-autocomplete/master/demo/img/example2.png" width="250px" />
 
