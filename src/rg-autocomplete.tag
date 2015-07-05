@@ -23,7 +23,7 @@
 	<script>
 		var _this = this;
 		_this.opened = true;
-		_this.textbox.value = opts.value;
+		_this.textbox.value = opts.value || '';
 
 		_this.filterItems = function () {
 			_this.filteredItems = opts.items.filter(function (item) {
