@@ -5,15 +5,14 @@
 					 placeholder="{ opts.placeholder }"
 					 onkeydown="{ handleKeys }"
 					 oninput="{ filterItems }"
-					 onfocus="{ handleOnFocus }">
+					 onfocus="{ filterItems }">
 
 		<div class="dropdown { open: opened }" show="{ opened }">
 			<div class="list">
 				<ul>
-					<li each="{ opts.items }"
-							show="{ available }"
+					<li each="{ filteredItems }"
 							onclick="{ parent.select }"
-							class="item">
+							class="item { active: active }">
 						{ text }
 					</li>
 				</ul>
@@ -26,43 +25,59 @@
 		_this.opened = true;
 		_this.textbox.value = opts.value;
 
-		function handleClickOutside(e) {
-			if (!_this.root.contains(e.target)) {
-				if (opts.onclose && _this.opened) {
-					opts.onclose();
-				}
-				_this.opened = false;
-				_this.update();
-			}
-		}
-
-		_this.handleOnFocus = function () {
-			if (opts.onopen && _this.closed) {
-				opts.onopen();
-			}
-			_this.opened = true;
-			_this.filterItems();
-			_this.update();
-		};
-
 		_this.filterItems = function () {
-			opts.items.forEach(function (item) {
-				item.selected = false;
-				item.available = (_this.textbox.value.length == 0 ||
-				item.text.toString().toLowerCase().indexOf(_this.textbox.value.toString().toLowerCase()) > -1);
+			_this.filteredItems = opts.items.filter(function (item) {
+				item.active = false;
+				if (_this.textbox.value.length == 0 ||
+					item.text.toString().toLowerCase().indexOf(_this.textbox.value.toString().toLowerCase()) > -1) {
+					return true;
+				}
 			});
+			if (_this.filteredItems.length > 0) {
+				_this.opened = true;
+			}
 			if (opts.onfilter) {
 				opts.onfilter();
 			}
 			_this.update();
-			return true;
 		};
 
 		_this.handleKeys = function (e) {
-			if (e.keyCode == 38) {
-				console.log('up');
-			} else if (e.keyCode == 40) {
-				console.log('down');
+			var length = _this.filteredItems.length;
+			if (length > 0 && [13, 38, 40].indexOf(e.keyCode) > -1) {
+				e.preventDefault();
+				// Get the currently selected item
+				var activeIndex = null;
+				for (var i = 0; i < length; i++) {
+					var item = _this.filteredItems[i];
+					if (item.active) {
+						activeIndex = i;
+						break;
+					}
+				}
+
+				// We're leaving this item
+				if (activeIndex != null) {
+					_this.filteredItems[activeIndex].active = false;
+				}
+
+				if (e.keyCode == 38) {
+					// Move the active state to the next item lower down the index
+					if (activeIndex == null || activeIndex == 0) {
+						_this.filteredItems[length - 1].active = true;
+					} else {
+						_this.filteredItems[activeIndex - 1].active = true;
+					}
+				} else if (e.keyCode == 40) {
+					// Move the active state to the next item higher up the index
+					if (activeIndex == null || activeIndex == length - 1) {
+						_this.filteredItems[0].active = true;
+					} else {
+						_this.filteredItems[activeIndex + 1].active = true;
+					}
+				} else if (e.keyCode == 13 && activeIndex != null) {
+					_this.select({ item: _this.filteredItems[activeIndex] });
+				}
 			}
 			return true;
 		};
@@ -72,22 +87,34 @@
 			if (opts.onselect) {
 				opts.onselect(item);
 			}
-			opts.items.forEach(function (item) {
-				item.selected = false;
-			});
-			item.selected = true;
 			_this.textbox.value = item.text;
 			_this.opened = false;
 		};
 
+		_this.closeDropdown = function (e) {
+			if (!_this.root.contains(e.target)) {
+				if (opts.onclose && _this.opened) {
+					opts.onclose();
+				}
+				_this.opened = false;
+				_this.update();
+			}
+		};
+
 		_this.on('mount', function () {
-			document.addEventListener('click', handleClickOutside);
+			document.addEventListener('click', _this.closeDropdown);
+			document.addEventListener('focus', _this.closeDropdown, true);
 			_this.width = _this.textbox.getBoundingClientRect().width + 'px';
 			var dd = _this.root.querySelector('.dropdown');
 			dd.style.width = _this.width;
 			dd.style.position = 'absolute';
 			_this.opened = opts.opened;
 			_this.update();
+		});
+
+		_this.on('unmount', function () {
+			document.removeEventListener('click', _this.closeDropdown);
+			document.removeEventListener('focus', _this.closeDropdown, true);
 		});
 	</script>
 
@@ -154,6 +181,12 @@
 		li:hover {
 			background-color: #f3f3f3;
 		}
+
+		li.active,
+		li:hover.active {
+			background-color: #ededed;
+		}
+
 
 	</style>
 </rg-autocomplete>

@@ -1,7 +1,7 @@
 {
   "name": "riotgear-autocomplete",
-  "version": "1.0.0",
-  "description": "autocomplete slider component",
+  "version": "1.0.1",
+  "description": "autocomplete typeahead component",
   "main": "dist/rg-autocomplete.min.js",
   "scripts": {
     "lint": "jshint . --exclude-path=.gitignore",
