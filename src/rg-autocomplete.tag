@@ -45,6 +45,7 @@
 		_this.handleKeys = function (e) {
 			var length = _this.filteredItems.length;
 			if (length > 0 && [13, 38, 40].indexOf(e.keyCode) > -1) {
+				_this.opened = true;
 				e.preventDefault();
 				// Get the currently selected item
 				var activeIndex = null;

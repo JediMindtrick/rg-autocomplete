@@ -23,6 +23,7 @@ riot.tag('rg-autocomplete', '<div class="container { open: opened }" riot-style=
 		_this.handleKeys = function (e) {
 			var length = _this.filteredItems.length;
 			if (length > 0 && [13, 38, 40].indexOf(e.keyCode) > -1) {
+				_this.opened = true;
 				e.preventDefault();
 
 				var activeIndex = null;
