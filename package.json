@@ -1,12 +1,12 @@
 {
   "name": "riotgear-autocomplete",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "autocomplete typeahead component",
   "main": "dist/rg-autocomplete.min.js",
   "scripts": {
     "lint": "jshint . --exclude-path=.gitignore",
-    "riot": "riot src dist/rg-autocomplete.js",
-    "postriot": "riot demo",
+    "riot": "riot src dist/rg-autocomplete.js --type es6",
+    "postriot": "riot demo --type es6",
     "uglify": "uglifyjs --output dist/rg-autocomplete.min.js -- dist/rg-autocomplete.js",
     "build": "npm run riot && npm run uglify"
   },
@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/RiotGear/rg-autocomplete",
   "devDependencies": {
+    "babel": "^5.8.21",
     "jshint": "~2.7.0",
     "riot": "~2.2.2",
     "uglify-js": "~2.4.21"

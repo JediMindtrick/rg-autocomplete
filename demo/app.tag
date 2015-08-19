@@ -3,8 +3,7 @@
 	<rg-autocomplete items="{ countries }" type="text" placeholder="Enter a country name"></rg-autocomplete>
 
 	<script>
-		var _this = this;
-		_this.countries = [{
+		this.countries = [{
 			text: 'England'
 		}, {
 			text: 'Scotland'
@@ -12,7 +11,7 @@
 			text: 'Wales'
 		}, {
 			text: 'Ireland'
-		}];
+		}]
 	</script>
 
 </demo-app>

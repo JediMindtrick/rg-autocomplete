@@ -21,102 +21,92 @@
 	</div>
 
 	<script>
-		var _this = this;
-		_this.opened = true;
-		_this.textbox.value = opts.value || '';
+		this.opened = true
+		this.textbox.value = opts.value || ''
 
-		_this.filterItems = function () {
-			_this.filteredItems = opts.items.filter(function (item) {
+		this.filterItems = () => {
+			this.filteredItems = opts.items.filter((item) => {
 				item.active = false;
-				if (_this.textbox.value.length == 0 ||
-					item.text.toString().toLowerCase().indexOf(_this.textbox.value.toString().toLowerCase()) > -1) {
-					return true;
+				if (this.textbox.value.length == 0 ||
+					item.text.toString().toLowerCase().indexOf(this.textbox.value.toString().toLowerCase()) > -1) {
+					return true
 				}
-			});
-			if (_this.filteredItems.length > 0) {
-				_this.opened = true;
+			})
+			if (this.filteredItems.length > 0) {
+				this.opened = true
 			}
 			if (opts.onfilter) {
-				opts.onfilter();
+				opts.onfilter()
 			}
-			_this.update();
-		};
+			this.update()
+		}
 
-		_this.handleKeys = function (e) {
-			var length = _this.filteredItems.length;
+		this.handleKeys = (e) => {
+			var length = this.filteredItems.length
 			if (length > 0 && [13, 38, 40].indexOf(e.keyCode) > -1) {
-				_this.opened = true;
-				e.preventDefault();
+				this.opened = true
+				e.preventDefault()
 				// Get the currently selected item
-				var activeIndex = null;
+				var activeIndex = null
 				for (var i = 0; i < length; i++) {
-					var item = _this.filteredItems[i];
+					var item = this.filteredItems[i]
 					if (item.active) {
-						activeIndex = i;
-						break;
+						activeIndex = i
+						break
 					}
 				}
 
 				// We're leaving this item
-				if (activeIndex != null) {
-					_this.filteredItems[activeIndex].active = false;
-				}
+				if (activeIndex != null) this.filteredItems[activeIndex].active = false
 
 				if (e.keyCode == 38) {
 					// Move the active state to the next item lower down the index
-					if (activeIndex == null || activeIndex == 0) {
-						_this.filteredItems[length - 1].active = true;
-					} else {
-						_this.filteredItems[activeIndex - 1].active = true;
-					}
+					if (activeIndex == null || activeIndex == 0)
+						this.filteredItems[length - 1].active = true
+					else
+						this.filteredItems[activeIndex - 1].active = true
 				} else if (e.keyCode == 40) {
 					// Move the active state to the next item higher up the index
-					if (activeIndex == null || activeIndex == length - 1) {
-						_this.filteredItems[0].active = true;
-					} else {
-						_this.filteredItems[activeIndex + 1].active = true;
-					}
-				} else if (e.keyCode == 13 && activeIndex != null) {
-					_this.select({ item: _this.filteredItems[activeIndex] });
-				}
+					if (activeIndex == null || activeIndex == length - 1)
+						this.filteredItems[0].active = true
+					else
+						this.filteredItems[activeIndex + 1].active = true
+				} else if (e.keyCode == 13 && activeIndex != null)
+					this.select({ item: this.filteredItems[activeIndex] })
 			}
-			return true;
+			return true
 		};
 
-		_this.select = function (item) {
-			item = item.item;
-			if (opts.onselect) {
-				opts.onselect(item);
-			}
-			_this.textbox.value = item.text;
-			_this.opened = false;
-		};
+		this.select = (item) => {
+			item = item.item
+			if (opts.onselect) opts.onselect(item)
+			this.textbox.value = item.text
+			this.opened = false
+		}
 
-		_this.closeDropdown = function (e) {
-			if (!_this.root.contains(e.target)) {
-				if (opts.onclose && _this.opened) {
-					opts.onclose();
-				}
-				_this.opened = false;
-				_this.update();
+		this.closeDropdown = (e) => {
+			if (!this.root.contains(e.target)) {
+				if (opts.onclose && this.opened) opts.onclose()
+				this.opened = false
+				this.update()
 			}
 		};
 
-		_this.on('mount', function () {
-			document.addEventListener('click', _this.closeDropdown);
-			document.addEventListener('focus', _this.closeDropdown, true);
-			_this.width = _this.textbox.getBoundingClientRect().width + 'px';
-			var dd = _this.root.querySelector('.dropdown');
-			dd.style.width = _this.width;
-			dd.style.position = 'absolute';
-			_this.opened = opts.opened;
-			_this.update();
-		});
+		this.on('mount', () => {
+			document.addEventListener('click', this.closeDropdown)
+			document.addEventListener('focus', this.closeDropdown, true)
+			this.width = this.textbox.getBoundingClientRect().width + 'px'
+			var dd = this.root.querySelector('.dropdown')
+			dd.style.width = this.width
+			dd.style.position = 'absolute'
+			this.opened = opts.opened
+			this.update()
+		})
 
-		_this.on('unmount', function () {
-			document.removeEventListener('click', _this.closeDropdown);
-			document.removeEventListener('focus', _this.closeDropdown, true);
-		});
+		this.on('unmount', () => {
+			document.removeEventListener('click', this.closeDropdown)
+			document.removeEventListener('focus', this.closeDropdown, true)
+		})
 	</script>
 
 	<style scoped>
